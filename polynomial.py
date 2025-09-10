@@ -8,11 +8,13 @@ class X:
     def evaluate(self, x_value):
         # TODO: Implement evaluation for variable X
         # Should return an Int object with the given x_value
+        return Int(x_value)
         pass
 
     def simplify(self):
         # TODO (Optional Exercise): Implement simplification
         # X cannot be simplified further, so return self
+        return self
         pass
 
 
@@ -26,11 +28,13 @@ class Int:
     def evaluate(self, x_value):
         # TODO: Implement evaluation for integer constant
         # Should return an Int object with the stored integer value
+        return Int(self.i)
         pass
 
     def simplify(self):
         # TODO (Optional Exercise): Implement simplification
         # Integer constants cannot be simplified further, so return self
+        return self
         pass
 
 
@@ -45,12 +49,16 @@ class Add:
     def evaluate(self, x_value):
         # TODO: Implement evaluation for addition
         # Should evaluate both operands and return their sum
+        evaluated_p1 = self.p1.evaluate(x_value)
+        evaluated_p2 = self.p2.evaluate(x_value)
+        return Int(evaluated_p1.i + evaluated_p2.i)
         pass
 
     def simplify(self):
         # TODO (Optional Exercise): Implement simplification
         # Examples: X + 0 -> X, 0 + X -> X, 3 + 5 -> 8
         # Hint: Simplify operands first, then apply simplification rules
+        simplified_p1 = self.p1.simplify()
         pass
 
 
@@ -71,12 +79,16 @@ class Mul:
     def evaluate(self, x_value):
         # TODO: Implement evaluation for multiplication
         # Should evaluate both operands and return their product
+        evaluated_p1 = self.p1.evaluate(x_value)
+        evaluated_p2 = self.p2.evaluate(x_value)
+        return Int(evaluated_p1.i * evaluated_p2.i)
         pass
 
     def simplify(self):
         # TODO (Optional Exercise): Implement simplification
         # Examples: X * 0 -> 0, X * 1 -> X, 3 * 5 -> 15
         # Hint: Simplify operands first, then apply simplification rules
+        simplified_p1 = self.p1.simplify()
         pass
 
 
@@ -89,17 +101,24 @@ class Sub:
         # TODO: Implement string representation for subtraction
         # Should handle parentheses similar to Mul class
         # Hint: Look at how Mul class handles parentheses
+        left = f"( {self.p1} )" if isinstance(self.p1, (Add, Sub)) else str(self.p1)
+        right = f"( {self.p2} )" if isinstance(self.p2, (Add, Sub)) else str(self.p2)
+        return f"{left} - {right}"
         pass
 
     def evaluate(self, x_value):
         # TODO: Implement evaluation for subtraction
         # Should return the difference of the two operands
+        evaluated_p1 = self.p1.evaluate(x_value)
+        evaluated_p2 = self.p2.evaluate(x_value)
+        return Int(evaluated_p1.i - evaluated_p2.i)        
         pass
 
     def simplify(self):
         # TODO (Optional Exercise): Implement simplification
         # Examples: X - 0 -> X, 5 - 3 -> 2
         # Hint: Simplify operands first, then apply simplification rules
+        simplified_p1 = self.p1.simplify()
         pass
 
 
@@ -112,17 +131,24 @@ class Div:
         # TODO: Implement string representation for division
         # Should handle parentheses similar to Mul class
         # Hint: Look at how Mul class handles parentheses
+        left = f"( {self.p1} )" if isinstance(self.p1, (Add, Sub)) else str(self.p1)
+        right = f"( {self.p2} )" if isinstance(self.p2, (Add, Sub)) else str(self.p2)
+        return f"{left} / {right}"
         pass
 
     def evaluate(self, x_value):
         # TODO: Implement evaluation for division
         # Should return the quotient of the two operands (use integer division //)
+        evaluated_p1 = self.p1.evaluate(x_value)
+        evaluated_p2 = self.p2.evaluate(x_value)
+        return Int(evaluated_p1.i // evaluated_p2.i)        
         pass
 
     def simplify(self):
         # TODO (Optional Exercise): Implement simplification
         # Examples: X / 1 -> X, 6 / 2 -> 3
         # Hint: Simplify operands first, then apply simplification rules
+        simplified_p1 = self.p1.simplify()
         pass
 
 
